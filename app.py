@@ -167,13 +167,29 @@ PLOT_BG  = "#ede8df"
 GRID_CLR = "#d9d0c0"
 TEXT_CLR = "#7a1a2a"
 
+AXIS_STYLE = dict(
+    gridcolor=GRID_CLR,
+    linecolor="#a09080",
+    linewidth=1.5,
+    showline=True,
+    showgrid=True,
+    showticklabels=True,
+    ticks="outside",
+    tickcolor="#a09080",
+    ticklen=5,
+    tickfont=dict(color=TEXT_CLR, size=11),
+    title_font=dict(color=TEXT_CLR, size=12),
+    zerolinecolor=GRID_CLR,
+    zerolinewidth=1,
+)
+
 LAYOUT_BASE = dict(
     paper_bgcolor=PLOT_BG,
     plot_bgcolor=PLOT_BG,
     font=dict(family="DM Sans", color=TEXT_CLR, size=12),
-    margin=dict(l=20, r=20, t=40, b=20),
-    xaxis=dict(gridcolor=GRID_CLR, linecolor=GRID_CLR, zerolinecolor=GRID_CLR),
-    yaxis=dict(gridcolor=GRID_CLR, linecolor=GRID_CLR, zerolinecolor=GRID_CLR),
+    margin=dict(l=65, r=30, t=50, b=65),
+    xaxis=AXIS_STYLE,
+    yaxis=AXIS_STYLE,
 )
 
 # ── Load data ─────────────────────────────────────────────────────────────────
@@ -272,12 +288,12 @@ if show_1:
         x=(med_fem + med_male) / 2, y=0.78,
         text=f"Gap = {med_male - med_fem:.3f} log pts",
         showarrow=True, arrowhead=2, arrowcolor="#8b1a2a",
-        font=dict(color="#6b0f1a", size=11), bgcolor="#e8e0d0",
+        font=dict(color="#6b0f1a", size=11), bgcolor="#f5f0e8",
         bordercolor="#8b1a2a", borderwidth=1, borderpad=4,
     )
     fig1.update_layout(**LAYOUT_BASE, height=380,
         xaxis_title="Log Hourly Wage", yaxis_title="Density",
-        legend=dict(bgcolor="#ede8df", bordercolor="#c8bfaf", borderwidth=1))
+        legend=dict(bgcolor="#ede8df", bordercolor="#a09080", borderwidth=1))
     st.plotly_chart(fig1, use_container_width=True)
     st.markdown('<div class="insight-box">Both distributions peak near the same modal wage, yet the male distribution carries significantly more mass in the upper tail — driving a persistent median gap even after accounting for part-time workers in the lower spike.</div>', unsafe_allow_html=True)
 
@@ -317,7 +333,7 @@ if show_2:
         hovertemplate="<b>%{y}</b><br>Effect: %{x:.2f}%<extra></extra>",
     ))
     fig2.add_vline(x=0, line=dict(color="#9a4a55", dash="dash", width=1.5))
-    fig2.update_layout(**LAYOUT_BASE, height=340,
+    fig2.update_layout(**LAYOUT_BASE, height=360,
         xaxis_title="Impact on Current Pay (%)",
         yaxis_title="")
     st.plotly_chart(fig2, use_container_width=True)
@@ -360,6 +376,7 @@ if show_3:
             x0=i, x1=i + 1, y0=ends[i], y1=ends[i],
             line=dict(color="#a09080", width=1, dash="dot"))
     fig3.update_layout(**LAYOUT_BASE, height=420,
+        xaxis_title="Salary Component",
         yaxis_title="Indexed Salary Level",
         yaxis_range=[0, 115],
         showlegend=False)
@@ -400,7 +417,7 @@ if show_4:
                    fillcolor="rgba(91,155,213,0.06)", layer="below", line_width=0)
     fig4.update_layout(**LAYOUT_BASE, height=380,
         xaxis_title="Year", yaxis_title="Avg Log Wage Growth (Job Switchers)",
-        legend=dict(bgcolor="#ede8df", bordercolor="#c8bfaf", borderwidth=1))
+        legend=dict(bgcolor="#ede8df", bordercolor="#a09080", borderwidth=1))
     st.plotly_chart(fig4, use_container_width=True)
     st.markdown('<div class="insight-box">Pre-2018 the two groups track closely (parallel trends). Post-ban, the West Region line diverges upward — consistent with salary-history bans reducing the anchoring penalty for job-switching women.</div>', unsafe_allow_html=True)
 
@@ -437,10 +454,10 @@ if show_5:
         x=dumb_df["male_avg_wage"], y=dumb_df["Marital_Group"],
         mode="markers", marker=dict(color=C_MALE, size=16),
         name="Men", hovertemplate="Men · %{y}<br>$%{x:.2f}/hr<extra></extra>"))
-    fig5.update_layout(**LAYOUT_BASE, height=300,
+    fig5.update_layout(**LAYOUT_BASE, height=320,
         xaxis_title="Average Hourly Wage ($)",
-        yaxis_title="",
-        legend=dict(bgcolor="#ede8df", bordercolor="#c8bfaf", borderwidth=1))
+        yaxis_title="Marital Group",
+        legend=dict(bgcolor="#ede8df", bordercolor="#a09080", borderwidth=1))
     st.plotly_chart(fig5, use_container_width=True)
     st.markdown('<div class="insight-box">Marriage widens the gap by 42% relative to single workers. Men receive a marriage premium; women experience a "motherhood penalty." This interaction is a major unobserved confounder in simple regressions.</div>', unsafe_allow_html=True)
 
@@ -488,7 +505,7 @@ if show_6:
                         showarrow=False, font=dict(color="#9a4a55", size=10), xanchor="left")
     fig6.update_layout(**LAYOUT_BASE, height=400,
         xaxis_title="Year", yaxis_title="Average Log Wage",
-        legend=dict(bgcolor="#ede8df", bordercolor="#c8bfaf", borderwidth=1, orientation="h", y=1.08))
+        legend=dict(bgcolor="#ede8df", bordercolor="#a09080", borderwidth=1, orientation="h", y=1.08))
     st.plotly_chart(fig6, use_container_width=True)
     st.markdown('<div class="insight-box">Under current trends, the log-wage gap persists through 2030. The female trajectory rises but remains structurally below the male line — the gap closes marginally without policy intervention, but does not converge within the forecast horizon.</div>', unsafe_allow_html=True)
 
